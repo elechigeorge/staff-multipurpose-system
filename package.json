@@ -1,0 +1,22 @@
+{
+  "name": "staff-mutipurp0se",
+  "version": "1.0.0",
+  "description": "refus giwa polytechnic staff multipurpose system ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Staff",
+    "Multipurpose"
+  ],
+  "author": "Elechi George",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.12.7"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
