@@ -1,11 +1,12 @@
 {
   "name": "staff-mutipurp0se",
   "version": "1.0.0",
+  "type": "module",
   "description": "refus giwa polytechnic staff multipurpose system ",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "develope": "nodemon server.js"
+    "develop": "nodemon server.js"
   },
   "keywords": [
     "Staff",
@@ -14,11 +15,16 @@
   "author": "Elechi George",
   "license": "MIT",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
     "express-validator": "^6.10.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.7",
-    "mongoose-timestamp": "^0.6.0"
+    "mongoose-timestamp": "^0.6.0",
+    "multer": "^1.4.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"

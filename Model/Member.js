@@ -1,15 +1,21 @@
-const mongoose = require('mongoose');
-const timestamp = require('mongoose-timestamp')
+import mongoose from 'mongoose';
+import timestamp from 'mongoose-timestamp';
+import bcrypt from 'bcryptjs'
 
 
 const MemberSchema = new mongoose.Schema({
+    password: {
+        type: String
+    },
+    email: {
+        type: String
+    },
+    staffID: {
+        type: String,
+        required: true,
+        unique: true
+    },
     personal_details: {
-        staffID: {
-            type: String,
-            required: true,
-            unique: true
-        },
-
         gender: {
             type: String
         },
@@ -22,71 +28,58 @@ const MemberSchema = new mongoose.Schema({
         other_name: {
             type: String
         },
-        email: {
-            type: String
-        },
+
         department: {
             type: String,
         },
         staff_group: {
             type: String
         }
+
     },
 
     contact_details: {
         address: {
-            type: String,
-            required: true
+            type: String
         },
         city: {
-            type: String,
-            required: true
+            type: String
         },
         state: {
-            type: String,
-            required: true
+            type: String
         },
         telephone: {
-            type: String,
-            required: true
+            type: String
         }
 
 
     },
     next_of_kin: {
         full_name: {
-            type: String,
-            required: true
+            type: String
         },
         address: {
-            type: String,
-            required: true
+            type: String
         },
         city: {
-            type: String,
-            required: true
+            type: String
         },
         state: {
-            type: String,
-            required: true
+            type: String
         },
         email: {
-            type: String,
-            required: true
+            type: String
         },
         phone: {
-            type: String,
-            required: true
+            type: String
         },
         relationship: {
-            type: String,
-            required: true
+            type: String
         }
     },
     contributions: {
         savings: {
-            type: String,
-            required: true
+            type: String
         },
         min_saving: {
             type: String,
@@ -97,10 +90,21 @@ const MemberSchema = new mongoose.Schema({
 
 });
 
-MemberSchema.plugins(timestamp)
+MemberSchema.plugin(timestamp)
 
+MemberSchema.methods.matchPassword = async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password)
+}
 
+MemberSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) {
+        next()
+    }
+
+    const salt = await bcrypt.genSalt(10)
+    this.password = await bcrypt.hash(this.password, salt)
+})
 
 const Members = mongoose.model("Membership", MemberSchema)
 
-module.exports = Members;
+export default Members
