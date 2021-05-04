@@ -1,35 +1,49 @@
-import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import thunk from 'redux-thunk';
-import rootReducer from './reducers';
-import setAuthToken from './utils/setAuthToken';
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
-const initialState = {};
+import {
+    userLoginReducer,
+    userRegisterReducer,
+    userDetailsReducer,
+    userUpdateProfileReducer,
+    userListReducer,
+    userDeleteReducer,
+    userUpdateReducer,
+} from './reducers/userReducers'
 
-const middleware = [thunk];
+
+const reducer = combineReducers({
+
+    userLogin: userLoginReducer,
+    userRegister: userRegisterReducer,
+    userDetails: userDetailsReducer,
+    userUpdateProfile: userUpdateProfileReducer,
+    userList: userListReducer,
+    userDelete: userDeleteReducer,
+    userUpdate: userUpdateReducer,
+
+})
+
+
+
+const userInfoFromStorage = localStorage.getItem('userInfo')
+    ? JSON.parse(localStorage.getItem('userInfo'))
+    : null
+
+
+
+const initialState = {
+
+    userLogin: { userInfo: userInfoFromStorage },
+}
+
+const middleware = [thunk]
 
 const store = createStore(
-    rootReducer,
+    reducer,
     initialState,
     composeWithDevTools(applyMiddleware(...middleware))
-);
-
-// set up a store subscription listener
-// to store the users token in localStorage
-
-// initialize current state from redux store for subscription comparison
-// preventing undefined error
-let currentState = store.getState();
-
-store.subscribe(() => {
-    // keep track of the previous and current state to compare changes
-    let previousState = currentState;
-    currentState = store.getState();
-    // if the token changes set the value in localStorage and axios headers
-    if (previousState.auth.token !== currentState.auth.token) {
-        const token = currentState.auth.token;
-        setAuthToken(token);
-    }
-});
+)
 
 export default store;
