@@ -2,59 +2,49 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col } from 'react-bootstrap'
-import Product from '../components/Product'
+
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import Paginate from '../components/Paginate'
-import ProductCarousel from '../components/ProductCarousel'
-import Meta from '../components/Meta'
-import { listProducts } from '../actions/productActions'
+
+// images import 
+import Logo from '../images/rugi.jpg'
+
+
+
+
 
 const HomeScreen = ({ match }) => {
     const keyword = match.params.keyword
 
-    const pageNumber = match.params.pageNumber || 1
+
 
     const dispatch = useDispatch()
 
-    const productList = useSelector((state) => state.productList)
-    const { loading, error, products, page, pages } = productList
 
-    useEffect(() => {
-        dispatch(listProducts(keyword, pageNumber))
-    }, [dispatch, keyword, pageNumber])
 
     return (
         <>
-            <Meta />
-            {!keyword ? (
-                <ProductCarousel />
-            ) : (
-                    <Link to='/' className='btn btn-light'>
-                        Go Back
-                    </Link>
-                )}
-            <h1>Latest Products</h1>
-            {loading ? (
-                <Loader />
-            ) : error ? (
-                <Message variant='danger'>{error}</Message>
-            ) : (
-                        <>
-                            <Row>
-                                {products.map((product) => (
-                                    <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                                        <Product product={product} />
-                                    </Col>
-                                ))}
-                            </Row>
-                            <Paginate
-                                pages={pages}
-                                page={page}
-                                keyword={keyword ? keyword : ''}
-                            />
-                        </>
-                    )}
+            <div style={{
+                display: 'flex',
+                justifyContent: "center",
+                alignItems: "center",
+                height: '90vh',
+                padding: '0px',
+                margin: '0px',
+                overflowX: "hidden",
+                overflowY: "hidden"
+            }}>
+                <img src={Logo} width="50%" height="70%" />
+
+                <div style={{
+                    position: "absolute",
+                    width: '100vw',
+                    height: '90vh',
+                    background: 'rgba(8, 209, 62, 0.5)'
+                }}></div>
+            </div>
+
+
         </>
     )
 }
