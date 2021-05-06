@@ -1,12 +1,12 @@
 
 import dotenv from 'dotenv';
-
 import express from 'express'
 import mongoose from 'mongoose';
 import cors from 'cors';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 
-import Members from './routes/Members.js'
+import Members from './routes/Members.js';
+import Admin from './routes/Admin.js';
 
 
 // init server
@@ -34,6 +34,7 @@ mongoose
 
 // routes 
 server.use('/accounts', Members);
+server.use('/admins', Admin);
 
 
 const PORT = process.env.PORT || 5000

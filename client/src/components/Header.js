@@ -28,20 +28,39 @@ const Header = () => {
 
                         <Nav className='ml-auto'>
 
-                            <LinkContainer to='/contact'>
-                                <Nav.Link>Contact us </Nav.Link>
-                            </LinkContainer>
 
-                            <LinkContainer to='/members'>
-                                <Nav.Link>Members</Nav.Link>
-                            </LinkContainer>
 
-                            <LinkContainer to='/admin'>
-                                <Nav.Link>Admin</Nav.Link>
-                            </LinkContainer>
+                            {userInfo ? (
+                                <>
 
+                                    <LinkContainer to='/'>
+                                        <Nav.Link onClick={logoutHandler}>Logout</Nav.Link>
+                                    </LinkContainer>
+
+                                </>
+
+                            ) : (
+                                    <>
+                                        <LinkContainer to='/contact'>
+                                            <Nav.Link>Contact us </Nav.Link>
+                                        </LinkContainer>
+
+                                        <LinkContainer to='/members'>
+                                            <Nav.Link>Members</Nav.Link>
+                                        </LinkContainer>
+
+                                        <LinkContainer to='/admin'>
+                                            <Nav.Link>Admin</Nav.Link>
+                                        </LinkContainer>
+                                    </>
+                                )}
 
                         </Nav>
+
+
+
+
+
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

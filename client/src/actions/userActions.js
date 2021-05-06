@@ -27,7 +27,7 @@ import {
 } from '../constants/userConstants'
 
 
-export const login = (staffID, password) => async (dispatch) => {
+export const login = (email, password) => async (dispatch) => {
     try {
         dispatch({
             type: USER_LOGIN_REQUEST,
@@ -40,8 +40,8 @@ export const login = (staffID, password) => async (dispatch) => {
         }
 
         const { data } = await axios.post(
-            '/account/login',
-            { staffID, password },
+            '/accounts/login',
+            { email, password },
             config
         )
 
@@ -64,52 +64,101 @@ export const login = (staffID, password) => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
     localStorage.removeItem('userInfo')
-   
-   
+
+
     dispatch({ type: USER_LOGOUT })
-    
-    document.location.href = '/login'
+
+    document.location.href = '/m/login'
 }
 
-export const register = (name, email, password) => async (dispatch) => {
-    try {
-        dispatch({
-            type: USER_REGISTER_REQUEST,
-        })
+export const register = (firstName,
+    lastName,
+    staffID,
+    gender,
+    phoneNumber,
+    department,
+    address,
+    city,
+    state,
+    fullName,
+    email,
+    password,
+    kaddress,
+    kcity,
+    kphone,
+    kstate,
+    kemail,
+    relationship) => async (dispatch) => {
 
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-            },
+        console.log(staffID)
+        try {
+            dispatch({
+                type: USER_REGISTER_REQUEST,
+            })
+
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+
+            const { data } = await axios.post(
+                '/accounts',
+                {
+                    password: password,
+                    email: email,
+                    staffID: staffID,
+                    personal_details: {
+                        gender: gender,
+                        first_name: firstName,
+                        last_name: lastName,
+                        department: department
+                    },
+
+                    contact_details: {
+                        address: address,
+                        city: city,
+                        state: state,
+                        telephone: phoneNumber
+                    },
+
+                    next_of_kin: {
+                        full_name: fullName,
+                        address: kaddress,
+                        city: kcity,
+                        state: kstate,
+                        email: kemail,
+                        phone: kphone,
+                        relationship: relationship
+                    },
+
+                },
+                config
+            )
+
+            console.log(email)
+
+            dispatch({
+                type: USER_REGISTER_SUCCESS,
+                payload: data,
+            })
+
+            dispatch({
+                type: USER_LOGIN_SUCCESS,
+                payload: data,
+            })
+
+            localStorage.setItem('userInfo', JSON.stringify(data))
+        } catch (error) {
+            dispatch({
+                type: USER_REGISTER_FAIL,
+                payload:
+                    error.response && error.response.data.message
+                        ? error.response.data.message
+                        : error.message,
+            })
         }
-
-        const { data } = await axios.post(
-            '/account',
-            { name, email, password },
-            config
-        )
-
-        dispatch({
-            type: USER_REGISTER_SUCCESS,
-            payload: data,
-        })
-
-        dispatch({
-            type: USER_LOGIN_SUCCESS,
-            payload: data,
-        })
-
-        localStorage.setItem('userInfo', JSON.stringify(data))
-    } catch (error) {
-        dispatch({
-            type: USER_REGISTER_FAIL,
-            payload:
-                error.response && error.response.data.message
-                    ? error.response.data.message
-                    : error.message,
-        })
     }
-}
 
 export const getUserDetails = (id) => async (dispatch, getState) => {
     try {

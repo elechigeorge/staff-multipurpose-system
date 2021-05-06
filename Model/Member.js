@@ -10,6 +10,10 @@ const MemberSchema = new mongoose.Schema({
     email: {
         type: String
     },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
     staffID: {
         type: String,
         required: true,
@@ -77,13 +81,18 @@ const MemberSchema = new mongoose.Schema({
             type: String
         }
     },
-    contributions: {
-        savings: {
-            type: String
-        },
-        min_saving: {
+    account_details: {
+        bank: {
             type: String,
-            default: "10,000"
+            required: false
+        },
+        number: {
+            type: String,
+            required: false
+        },
+        account_name: {
+            type: String,
+            required: false
         }
     }
 

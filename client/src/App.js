@@ -5,11 +5,12 @@ import Header from './components/Header'
 
 import HomeScreen from './screens/HomeScreen'
 
-import LoginScreen from './screens/LoginScreen'
-import RegisterScreen from './screens/RegisterScreen'
+import MemberLoginScreen from './screens/MemberLoginScreen'
+import MemberRegisterScreen from './screens/MemberRegisterScreen'
 import ContactScreen from './screens/ContactScreen'
 import AdminScreen from './screens/AdminScreen'
-import MemberScreen from './screens/MemberScreen'
+import MemberScreen from './screens/MemberScreen';
+import MemberDashboard from './screens/MemberDashboard';
 
 
 const App = () => {
@@ -19,11 +20,12 @@ const App = () => {
       <main className=''>
         <Container>
 
-          <Route path='/login' component={LoginScreen} />
-          <Route path='/register' component={RegisterScreen} />
+          <Route path='/m/login' component={MemberLoginScreen} />
+          <Route path='/m/register' component={MemberRegisterScreen} />
           <Route path='/contact' component={ContactScreen} />
           <Route path='/members' component={MemberScreen} />
           <Route path='/admin' component={AdminScreen} />
+          <Route path='/m/dashboard' component={MemberDashboard} />
 
 
           {/* <Route path='/admin/userlist' component={UserListScreen} />

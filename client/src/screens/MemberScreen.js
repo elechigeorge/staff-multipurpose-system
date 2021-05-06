@@ -1,11 +1,12 @@
-import React from 'react'
+import React from 'react';
+import MemberLoginScreen from './MemberLoginScreen'
 
-function Members() {
+function MemberScreen() {
     return (
         <div>
-            <h1>Welcome to the members area</h1>
+            <MemberLoginScreen />
         </div>
     )
 }
 
-export default Members
+export default MemberScreen

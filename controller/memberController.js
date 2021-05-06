@@ -1,18 +1,18 @@
 import asyncHandler from 'express-async-handler'
 import generateToken from '../utils/generateToken.js'
 import User from '../Model/Member.js'
+import Member from '../Model/Member.js'
 
 // @desc    Auth user & get token
 // @route   POST /api/users/login
 // @access  Public
 const authUser = asyncHandler(async (req, res) => {
-    const { password, staffID } = req.body
+    const { password, email } = req.body
 
-    const user = await User.findOne({ staffID })
+    const user = await Member.findOne({ email })
 
     if (user && (await user.matchPassword(password))) {
         res.json({
-            _id: user._id,
             _id: user._id,
             password: user.password,
             email: user.email,
@@ -40,9 +40,6 @@ const authUser = asyncHandler(async (req, res) => {
                 phone: user.next_of_kin.phone,
                 relationship: user.next_of_kin.relationship
             },
-            contributions: {
-                savings: user.contributions.savings
-            },
             token: generateToken(user._id),
         })
     } else {
@@ -55,9 +52,9 @@ const authUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-    const { staffID } = req.body
+    const { email } = req.body
 
-    const userExists = await User.findOne({ staffID })
+    const userExists = await User.findOne({ email })
 
     if (userExists) {
         res.status(400)
@@ -90,9 +87,6 @@ const registerUser = asyncHandler(async (req, res) => {
             email: req.body.next_of_kin.email,
             phone: req.body.next_of_kin.phone,
             relationship: req.body.next_of_kin.relationship
-        },
-        contributions: {
-            savings: req.body.contributions.savings
         }
     })
 
@@ -124,9 +118,6 @@ const registerUser = asyncHandler(async (req, res) => {
                 phone: user.next_of_kin.phone,
                 relationship: user.next_of_kin.relationship
             },
-            contributions: {
-                savings: user.contributions.savings
-            },
             token: generateToken(user._id)
         })
     } else {
@@ -157,23 +148,24 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // @desc    Update user profile
 // @route   PUT /api/users/profile
 // @access  Private
-const updateUserProfile = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.user._id)
+const updateMemberAccount = asyncHandler(async (req, res) => {
+    const user = await Member.findById(req.user._id)
+
+    console.log(req.user)
+
 
     if (user) {
-        user.name = req.body.name || user.name
-        user.email = req.body.email || user.email
-        if (req.body.password) {
-            user.password = req.body.password
-        }
+
+        const { bank, account_name, number } = user.account_details
+        bank = req.body.bank
+        account_name = req.body.account_name
+        number = req.body.number
 
         const updatedUser = await user.save()
 
         res.json({
             _id: updatedUser._id,
-            name: updatedUser.name,
-            email: updatedUser.email,
-            isAdmin: updatedUser.isAdmin,
+            account_details: updatedUser.account_details,
             token: generateToken(updatedUser._id),
         })
     } else {
@@ -248,7 +240,7 @@ export {
     authUser,
     registerUser,
     getUserProfile,
-    updateUserProfile,
+    updateMemberAccount,
     getUsers,
     deleteUser,
     getUserById,

@@ -1,20 +1,19 @@
 import express from 'express'
 const router = express.Router()
 import {
-  authUser,
-  registerUser,
-  getUsers,
-  deleteUser,
-  getUserById,
-  updateUser,
-  updateMemberAccount,
-} from '../controller/memberController.js';
+    authUser,
+    registerUser,
+    getUserById,
+    getMemberById,
+    getMembers,
+    updateMemberAccount,
+} from '../controller/adminController.js';
 
 import { protect, admin } from '../middleware/authentication.js'
 
-router.route('/').post(registerUser).get(protect, admin, getUsers);
+router.route('/').post(registerUser).get(protect, admin, getMembers);
 
-router.route('/update').put(updateMemberAccount, authUser, getUsers);
+router.route('/update/:id').put(updateMemberAccount, authUser);
 
 router.post('/login', authUser);
 
