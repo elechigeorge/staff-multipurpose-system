@@ -63,12 +63,12 @@ export const login = (email, password) => async (dispatch) => {
 }
 
 export const logout = () => (dispatch) => {
+    
     localStorage.removeItem('userInfo')
-
 
     dispatch({ type: USER_LOGOUT })
 
-    document.location.href = '/m/login'
+    document.location.href = '/m/login';
 }
 
 export const register = (firstName,
@@ -136,7 +136,7 @@ export const register = (firstName,
                 config
             )
 
-            console.log(email)
+
 
             dispatch({
                 type: USER_REGISTER_SUCCESS,
@@ -190,6 +190,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
         if (message === 'Not authorized, token failed') {
             dispatch(logout())
         }
+
         dispatch({
             type: USER_DETAILS_FAIL,
             payload: message,
@@ -219,12 +220,15 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
         dispatch({
             type: USER_UPDATE_PROFILE_SUCCESS,
             payload: data,
-        })
+        });
+
+
         dispatch({
             type: USER_LOGIN_SUCCESS,
             payload: data,
-        })
-        localStorage.setItem('userInfo', JSON.stringify(data))
+        });
+
+        localStorage.setItem('userInfo', JSON.stringify(data));
     } catch (error) {
         const message =
             error.response && error.response.data.message

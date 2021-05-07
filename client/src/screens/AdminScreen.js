@@ -1,9 +1,10 @@
-import React from 'react'
+import React from 'react';
+import LoginScreen from './LoginScreen';
 
 function Admin() {
     return (
         <div>
-            <h1>Welcome to the Administrators Area</h1>
+            <LoginScreen />
         </div>
     )
 }

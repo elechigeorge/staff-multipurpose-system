@@ -8,9 +8,9 @@ import Members from '../Model/Member.js'
 // @route   POST /api/users/login
 // @access  Public
 const authUser = asyncHandler(async (req, res) => {
-    const { password, staffID } = req.body
+    const { email, password } = req.body
 
-    const user = await Admin.findOne({ staffID })
+    const user = await Admin.findOne({ email })
 
     if (user && (await user.matchPassword(password))) {
         res.json({
@@ -22,8 +22,8 @@ const authUser = asyncHandler(async (req, res) => {
             token: generateToken(user._id),
         })
     } else {
-        res.status(401)
-        throw new Error('Invalid credentials')
+        res.status(500)
+        throw new Error('server error')
     }
 })
 

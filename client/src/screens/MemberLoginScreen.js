@@ -62,8 +62,8 @@ const MemberLoginScreen = ({ location, history }) => {
                     </Form.Group>
 
                     <Button type='submit' variant='success' className="btn-block">
-                        Login In
-        </Button>
+                        Login
+                </Button>
                 </Form>
 
                 <Row className='py-3'>

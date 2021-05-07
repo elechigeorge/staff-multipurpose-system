@@ -1,4 +1,5 @@
 import express from 'express'
+
 const router = express.Router()
 import {
     authUser,
@@ -12,6 +13,8 @@ import {
 import { protect, admin } from '../middleware/authentication.js'
 
 router.route('/').post(registerUser).get(protect, admin, getMembers);
+
+router.route('/members').get(getMembers)
 
 router.route('/update/:id').put(updateMemberAccount, authUser);
 

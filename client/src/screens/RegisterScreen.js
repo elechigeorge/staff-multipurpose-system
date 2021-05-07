@@ -1,48 +1,62 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import { register } from '../actions/userActions'
+import { register, getAllMembers } from '../actions/adminActions'
+
 
 const RegisterScreen = ({ location, history }) => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
+    const [staffID, setStaffID] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [message, setMessage] = useState(null)
 
     const dispatch = useDispatch()
 
-    const userRegister = useSelector((state) => state.userRegister)
-    const { loading, error, userInfo } = userRegister
+    const adminRegister = useSelector((state) => state.adminRegister)
+    const { loading, error, adminInfo } = adminRegister
 
-    const redirect = location.search ? location.search.split('=')[1] : '/'
 
-    useEffect(() => {
-        if (userInfo) {
-            history.push(redirect)
-        }
-    }, [history, userInfo, redirect])
 
     const submitHandler = (e) => {
         e.preventDefault()
         if (password !== confirmPassword) {
             setMessage('Passwords do not match')
         } else {
-            dispatch(register(name, email, password))
+            dispatch(register(staffID, name, email, password))
         }
+    }
+
+    useEffect(() => {
+        dispatch(getAllMembers())
+    }, [dispatch])
+
+    if (adminInfo) {
+        return <Redirect to="/dashboard" />
     }
 
     return (
         <FormContainer>
-            <h1>Sign Up</h1>
+            <h1>Admin Register </h1>
             {message && <Message variant='danger'>{message}</Message>}
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
             <Form onSubmit={submitHandler}>
+                <Form.Group controlId='name'>
+                    <Form.Label>Staff ID</Form.Label>
+                    <Form.Control
+                        type='name'
+                        placeholder='Enter name'
+                        value={name}
+                        onChange={(e) => setStaffID(e.target.value)}
+                    ></Form.Control>
+                </Form.Group>
+
                 <Form.Group controlId='name'>
                     <Form.Label>Name</Form.Label>
                     <Form.Control
@@ -52,6 +66,7 @@ const RegisterScreen = ({ location, history }) => {
                         onChange={(e) => setName(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
+
 
                 <Form.Group controlId='email'>
                     <Form.Label>Email Address</Form.Label>
@@ -83,7 +98,7 @@ const RegisterScreen = ({ location, history }) => {
                     ></Form.Control>
                 </Form.Group>
 
-                <Button type='submit' variant='primary'>
+                <Button type='submit' variant='success' className="btn-block">
                     Register
         </Button>
             </Form>
@@ -91,7 +106,7 @@ const RegisterScreen = ({ location, history }) => {
             <Row className='py-3'>
                 <Col>
                     Have an Account?{' '}
-                    <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
+                    <Link to={'/login'}>
                         Login
           </Link>
                 </Col>

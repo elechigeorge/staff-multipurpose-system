@@ -37,7 +37,7 @@ server.use('/accounts', Members);
 server.use('/admins', Admin);
 
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 5000;
 
 // listen to server call 
 server
