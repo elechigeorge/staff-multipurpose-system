@@ -7,16 +7,16 @@ import {
     getUserById,
     getMemberById,
     getMembers,
-    updateMemberAccount,
+    updateMemberFinancialStatus,
 } from '../controller/adminController.js';
 
-import { protect, admin } from '../middleware/authentication.js'
+import { protect, admin } from '../middleware/authentication.js';
 
 router.route('/').post(registerUser).get(protect, admin, getMembers);
 
-router.route('/members').get(getMembers)
+router.route('/members').get(getMembers);
 
-router.route('/update/:id').put(updateMemberAccount, authUser);
+router.route('/f/update').put(updateMemberFinancialStatus, authUser);
 
 router.post('/login', authUser);
 

@@ -3,6 +3,7 @@ import generateToken from '../utils/generateToken.js'
 
 import Admin from '../Model/Admin.js'
 import Members from '../Model/Member.js'
+import Loan from '../Model/Loan.js'
 
 // @desc    Auth user & get token
 // @route   POST /api/users/login
@@ -81,35 +82,44 @@ const getUserProfile = asyncHandler(async (req, res) => {
     }
 })
 
-// @desc    Update user profile
-// @route   PUT /api/users/profile
-// @access  Private
-const updateMemberAccount = asyncHandler(async (req, res) => {
-    const user = await Member.findById(req.user._id)
+const updateMemberFinancialStatus = asyncHandler(async (req, res) => {
+
+    const id = req.params.id
+    const user = await Member.findById(id)
+    const loans = await Loans.find({})
+
+    let getLoan;
+
+    if (loans.user.some((usr) => like.usr.toString() === user._id)) {
+        getLoan = usr.amount;
+    } else {
+        getLoan = 0
+    }
+
 
     if (user) {
 
-        const { bank, account_name, number } = user.account_details
-        bank = req.body.bank
-        account_name = req.body.account_name
-        number = req.body.number
+        const { asset, loan, credit_status, debit_status, remark } = user.financial
+        asset: req.body.asset
+        loan: getLoan
+        credit_status: req.body.creditStatus
+        debit_status: req.body.debitStatus
+        remark: req.body.remark
 
         const updatedUser = await user.save()
 
         res.json({
             _id: updatedUser._id,
-            account_details: updatedUser.account_details,
+            financial: updatedUser.financial,
             token: generateToken(updatedUser._id),
         })
     } else {
         res.status(404)
-        throw new Error('User not found');
+        throw new Error('User not found')
     }
 })
 
-// @desc    Get all users
-// @route   GET /api/users
-// @access  Private/Admin
+
 const getMembers = asyncHandler(async (req, res) => {
     const users = await Members.find({})
     res.json(users)
@@ -155,7 +165,7 @@ export {
     authUser,
     registerUser,
     getUserProfile,
-    updateMemberAccount,
+    updateMemberFinancialStatus,
     getMembers,
     getUserById,
     getMemberById,

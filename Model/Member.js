@@ -94,10 +94,37 @@ const MemberSchema = new mongoose.Schema({
             type: String,
             required: false
         }
+    },
+    contributions: {
+        savings: {
+            type: String,
+            default: "12000"
+        }
+    },
+    financial: {
+        asset: {
+            type: String,
+            default: "12000"
+        },
+        loan: {
+            type: String
+        },
+        credit_status: {
+            type: String,
+            default: "Null"
+        },
+        debit_status: {
+            type: String,
+            default: "Null"
+        },
+        remark: {
+            type: String,
+            default: "Null"
+        }
     }
 
-
 });
+
 
 MemberSchema.plugin(timestamp)
 

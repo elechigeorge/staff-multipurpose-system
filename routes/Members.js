@@ -6,15 +6,14 @@ import {
   getUsers,
   deleteUser,
   getUserById,
-  updateUser,
-  updateMemberAccount,
+  updateMemberAccountDetails,
 } from '../controller/memberController.js';
 
 import { protect, admin } from '../middleware/authentication.js'
 
 router.route('/').post(registerUser).get(protect, admin, getUsers);
 
-router.route('/update').put(updateMemberAccount, authUser, getUsers);
+router.route('/a/update').put(protect, updateMemberAccountDetails);
 
 router.post('/login', authUser);
 

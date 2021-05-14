@@ -87,39 +87,30 @@ const registerUser = asyncHandler(async (req, res) => {
             email: req.body.next_of_kin.email,
             phone: req.body.next_of_kin.phone,
             relationship: req.body.next_of_kin.relationship
+        },
+        account_details: {
+            bank: 'UBA',
+            account_name: "Joe",
+            number: "1235678"
+        },
+        contributions: {
+            savings: "12000"
         }
     })
 
     if (user) {
         res.status(201).json({
-            _id: user._id,
-            password: user.password,
+
             email: user.email,
             staffID: user.staffID,
-            personal_details: {
-                gender: user.personal_details.gender,
-                first_name: user.personal_details.first_name,
-                last_name: user.personal_details.last_name,
-                other_name: user.personal_details.other_name,
-                department: user.personal_details.department
-            },
-            contact_details: {
-                address: user.contact_details.addess,
-                city: user.contact_details.city,
-                state: user.contact_details.state,
-                telephone: user.contact_details.telephone
-            },
-            next_of_kin: {
-                full_name: user.next_of_kin.full_name,
-                address: user.next_of_kin.address,
-                city: user.next_of_kin.city,
-                state: user.next_of_kin.state,
-                email: user.next_of_kin.email,
-                phone: user.next_of_kin.phone,
-                relationship: user.next_of_kin.relationship
-            },
+            personal_details: user.personal_details,
+            contact_details: user.contact_details,
+            next_of_kin: user.next_of_kin,
+            account_details: user.account_details,
+            contributions: user.contributions,
+            financial: user.financial,
             token: generateToken(user._id)
-        })
+        });
     } else {
         res.status(400)
         throw new Error('Invalid user data')
@@ -145,10 +136,8 @@ const getUserProfile = asyncHandler(async (req, res) => {
     }
 })
 
-// @desc    Update user profile
-// @route   PUT /api/users/profile
-// @access  Private
-const updateMemberAccount = asyncHandler(async (req, res) => {
+
+const updateMemberAccountDetails = asyncHandler(async (req, res) => {
     const user = await Member.findById(req.user._id)
 
     console.log(req.user)
@@ -157,9 +146,9 @@ const updateMemberAccount = asyncHandler(async (req, res) => {
     if (user) {
 
         const { bank, account_name, number } = user.account_details
-        bank = req.body.bank
-        account_name = req.body.account_name
-        number = req.body.number
+        bank: req.body.bank
+        account_name: req.body.accountName
+        number: req.body.number
 
         const updatedUser = await user.save()
 
@@ -173,6 +162,9 @@ const updateMemberAccount = asyncHandler(async (req, res) => {
         throw new Error('User not found')
     }
 })
+
+
+
 
 // @desc    Get all users
 // @route   GET /api/users
@@ -211,38 +203,13 @@ const getUserById = asyncHandler(async (req, res) => {
     }
 })
 
-// @desc    Update user
-// @route   PUT /api/users/:id
-// @access  Private/Admin
-const updateUser = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id)
-
-    if (user) {
-        user.name = req.body.name || user.name
-        user.email = req.body.email || user.email
-        user.isAdmin = req.body.isAdmin
-
-        const updatedUser = await user.save()
-
-        res.json({
-            _id: updatedUser._id,
-            name: updatedUser.name,
-            email: updatedUser.email,
-            isAdmin: updatedUser.isAdmin,
-        })
-    } else {
-        res.status(404)
-        throw new Error('User not found')
-    }
-})
 
 export {
     authUser,
     registerUser,
     getUserProfile,
-    updateMemberAccount,
+    updateMemberAccountDetails,
     getUsers,
     deleteUser,
     getUserById,
-    updateUser,
 }
