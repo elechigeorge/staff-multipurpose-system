@@ -1,5 +1,5 @@
 import asyncHandler from 'express-async-handler'
-
+import Member from '../Model/Member.js'
 import Loan from '../Model/Loan.js';
 
 
@@ -51,6 +51,24 @@ const getAllLoanRequest = asyncHandler(async (req, res) => {
     }
 })
 
+const getSpecificMemberLoanRequest = asyncHandler(async (req, res) => {
+
+    // grab current member id and all loans
+
+    const loans = await Loan.find({});
+
+
+
+    if (loans.map(loan => loan.user.toString() === req.user._id)) {
+
+
+        res.status(200).json(loans);
+    } else {
+        res.status(400)
+        throw new Error('Loans not found')
+    }
+})
+
 
 
 const createLoanRequest = asyncHandler(async (req, res) => {
@@ -79,7 +97,7 @@ const createLoanRequest = asyncHandler(async (req, res) => {
 })
 
 const deleteLoanRequest = asyncHandler(async (req, res) => {
-    const loan = await User.findById(req.params.id)
+    const loan = await Loan.findById(req.params.id)
 
     if (loan) {
         await loan.remove()
@@ -108,5 +126,6 @@ export {
     getAllApprovedLoanRequest,
     createLoanRequest,
     deleteLoanRequest,
-    getLoanById
+    getLoanById,
+    getSpecificMemberLoanRequest
 }

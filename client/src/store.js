@@ -6,30 +6,49 @@ import {
     userLoginReducer,
     userRegisterReducer,
     userDetailsReducer,
-    userUpdateProfileReducer,
+    userUpdateAccountReducer,
     userListReducer,
     userDeleteReducer,
     userUpdateReducer,
-} from './reducers/userReducers'
+} from './reducers/userReducers';
+
+import {
+    getAllApprovedLoanReducer,
+    getAllLoansReducer,
+    loanDeleteReducer,
+    approveLoanReducer,
+    loanCreateReducer,
+    getSpecificLoansReducer
+} from './reducers/loanReducer'
 
 import {
     adminLoginReducer,
     adminRegisterReducer,
     memberDetailsReducer,
     memberListReducer
-} from './reducers/adminReducer'
+} from './reducers/adminReducer';
 
 
 const reducer = combineReducers({
     adminLogin: adminLoginReducer,
     adminRegister: adminRegisterReducer,
+
     memberDetails: memberDetailsReducer,
     memberList: memberListReducer,
+    memberUpdate: userUpdateAccountReducer,
+
+    loanCreate: loanCreateReducer,
+    approveLoan: approveLoanReducer,
+    approvedLoan: getAllApprovedLoanReducer,
+    allLoan: getAllLoansReducer,
+    loanDelete: loanDeleteReducer,
+    currentMember: getSpecificLoansReducer,
+
+
 
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,
     userDetails: userDetailsReducer,
-    userUpdateProfile: userUpdateProfileReducer,
     userList: userListReducer,
     userDelete: userDeleteReducer,
     userUpdate: userUpdateReducer,

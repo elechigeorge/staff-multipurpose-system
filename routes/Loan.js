@@ -6,7 +6,8 @@ import {
     approveLoanRequest,
     deleteLoanRequest,
     getLoanById,
-    getAllApprovedLoanRequest
+    getAllApprovedLoanRequest,
+    getSpecificMemberLoanRequest
 } from '../controller/loanController.js';
 
 import { protect } from '../middleware/authentication.js'
@@ -14,6 +15,8 @@ import { protect } from '../middleware/authentication.js'
 router.route('/').post(protect, createLoanRequest).get(protect, getAllLoanRequest);
 
 router.route('/approved').get(protect, getAllApprovedLoanRequest)
+
+router.route('/member').get(protect, getSpecificMemberLoanRequest)
 
 
 router

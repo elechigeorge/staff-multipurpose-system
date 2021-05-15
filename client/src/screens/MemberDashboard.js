@@ -1,13 +1,14 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Tab, Button, Row, Col, Nav } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { Tab, Row, Col, Nav } from 'react-bootstrap';
 import AccountDetails from './UpdateAccountDetails';
 import MemberInformation from './MemberInformation';
+import MemberStatus from './MemberFinancialStatusScreen';
+import AllLoans from './MemberActiveLoanScreen';
+import LoanApply from './MemberApplyScreen';
 
 function MemberDashboard() {
 
-
-    const dispatch = useDispatch();
 
     const userLogin = useSelector((state) => state.userLogin)
     const { loading, error, userInfo } = userLogin;
@@ -27,7 +28,19 @@ function MemberDashboard() {
                                         </Nav.Item>
 
                                         <Nav.Item>
-                                            <Nav.Link eventKey="fourth">Member Info.</Nav.Link>
+                                            <Nav.Link eventKey="fourth">Member Information</Nav.Link>
+                                        </Nav.Item>
+
+
+
+                                        <Nav.Item>
+                                            <Nav.Link eventKey="third">Financial Status</Nav.Link>
+                                        </Nav.Item>
+                                        <Nav.Item>
+                                            <Nav.Link eventKey="second">Loan Form</Nav.Link>
+                                        </Nav.Item>
+                                        <Nav.Item>
+                                            <Nav.Link eventKey="fifth">Loans</Nav.Link>
                                         </Nav.Item>
                                     </Nav>
                                 </Col>
@@ -37,8 +50,20 @@ function MemberDashboard() {
                                             <AccountDetails />
                                         </Tab.Pane>
 
+                                        <Tab.Pane eventKey="second">
+                                            <LoanApply />
+                                        </Tab.Pane>
+
+                                        <Tab.Pane eventKey="third">
+                                            <MemberStatus />
+                                        </Tab.Pane>
+
                                         <Tab.Pane eventKey="fourth">
                                             <MemberInformation />
+                                        </Tab.Pane>
+
+                                        <Tab.Pane eventKey="fifth">
+                                            <AllLoans />
                                         </Tab.Pane>
                                     </Tab.Content>
                                 </Col>

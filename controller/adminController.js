@@ -85,31 +85,31 @@ const getUserProfile = asyncHandler(async (req, res) => {
 const updateMemberFinancialStatus = asyncHandler(async (req, res) => {
 
     const id = req.params.id
-    const user = await Member.findById(id)
-    const loans = await Loans.find({})
+    const user = await Members.findById(id)
 
-    let getLoan;
 
-    if (loans.user.some((usr) => like.usr.toString() === user._id)) {
-        getLoan = usr.amount;
-    } else {
-        getLoan = 0
-    }
 
 
     if (user) {
 
-        const { asset, loan, credit_status, debit_status, remark } = user.financial
-        asset: req.body.asset
-        loan: getLoan
-        credit_status: req.body.creditStatus
-        debit_status: req.body.debitStatus
-        remark: req.body.remark
+
+        user.financial.asset = req.body.asset
+        user.financial.loan = req.body.loan
+        user.financial.credit_status = req.body.creditStatus
+        user.financial.debit_status = req.body.debitStatus
+        user.financial.remark = req.body.remark
 
         const updatedUser = await user.save()
 
         res.json({
             _id: updatedUser._id,
+            email: updatedUser.email,
+            staffID: updatedUser.staffID,
+            personal_details: updatedUser.personal_details,
+            contact_details: updatedUser.contact_details,
+            next_of_kin: updatedUser.next_of_kin,
+            account_details: updatedUser.account_details,
+            contributions: updatedUser.contributions,
             financial: updatedUser.financial,
             token: generateToken(updatedUser._id),
         })
@@ -117,6 +117,9 @@ const updateMemberFinancialStatus = asyncHandler(async (req, res) => {
         res.status(404)
         throw new Error('User not found')
     }
+
+
+
 })
 
 

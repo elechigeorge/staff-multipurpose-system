@@ -16,7 +16,7 @@ router.route('/').post(registerUser).get(protect, admin, getMembers);
 
 router.route('/members').get(getMembers);
 
-router.route('/f/update').put(updateMemberFinancialStatus, authUser);
+router.route('/f/update/:id').put(updateMemberFinancialStatus, authUser);
 
 router.post('/login', authUser);
 
@@ -24,10 +24,11 @@ router.post('/login', authUser);
 //   .route('/profile')
 //   .get(protect, getUserProfile)
 //   .put(protect, updateUserProfile)
+
 // router
 //   .route('/:id')
 //   .delete(protect, admin, deleteUser)
 //   .get(protect, admin, getUserById)
 //   .put(protect, admin, updateUser)
 
-export default router
+export default router;

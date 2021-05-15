@@ -40,6 +40,8 @@ const authUser = asyncHandler(async (req, res) => {
                 phone: user.next_of_kin.phone,
                 relationship: user.next_of_kin.relationship
             },
+            financial: user.financial,
+            account_details: user.account_details,
             token: generateToken(user._id),
         })
     } else {
@@ -145,16 +147,23 @@ const updateMemberAccountDetails = asyncHandler(async (req, res) => {
 
     if (user) {
 
-        const { bank, account_name, number } = user.account_details
-        bank: req.body.bank
-        account_name: req.body.accountName
-        number: req.body.number
+        user.account_details.bank = req.body.bank || user.account_details.bank
+        user.account_details.account_name = req.body.accountName || user.account_details.account_name
+        user.account_details.number = req.body.number || user.account_details.number
+
 
         const updatedUser = await user.save()
 
         res.json({
             _id: updatedUser._id,
+            email: updatedUser.email,
+            staffID: updatedUser.staffID,
+            personal_details: updatedUser.personal_details,
+            contact_details: updatedUser.contact_details,
+            next_of_kin: updatedUser.next_of_kin,
             account_details: updatedUser.account_details,
+            contributions: updatedUser.contributions,
+            financial: updatedUser.financial,
             token: generateToken(updatedUser._id),
         })
     } else {

@@ -7,7 +7,7 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 
 // images import 
-import Logo from '../images/rugi.jpg'
+import Logo from '../images/head.jpeg'
 
 
 

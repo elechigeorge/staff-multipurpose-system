@@ -6,6 +6,7 @@ import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
 
 import { logout } from '../actions/userActions';
 import { logout as log } from '../actions/adminActions'
+import Logo from '../images/logo.png'
 
 const Header = () => {
     const dispatch = useDispatch()
@@ -21,16 +22,16 @@ const Header = () => {
         dispatch(logout())
     }
 
-    const logoutMember = () => {
-        dispatch(logout())
-    }
+
 
     return (
         <header>
             <Navbar bg='success' variant='dark' expand='lg' collapseOnSelect>
                 <Container>
                     <LinkContainer to='/'>
-                        <Navbar.Brand>RUGIPO CSMS</Navbar.Brand>
+                        <Navbar.Brand>
+                            <img src={Logo} style={{ width: "50px", height: "50px" }} alt="fireSpot" />
+                        </Navbar.Brand>
                     </LinkContainer>
                     <Navbar.Toggle aria-controls='basic-navbar-nav' />
                     <Navbar.Collapse id='basic-navbar-nav'>
