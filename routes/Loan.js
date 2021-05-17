@@ -23,6 +23,6 @@ router
     .route('/:id')
     .delete(protect, deleteLoanRequest)
     .get(protect, getLoanById)
-    .put(protect, approveLoanRequest)
+    .put(approveLoanRequest)
 
 export default router;

@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Tab, Button, Row, Col, Nav } from 'react-bootstrap';
 import MemberList from './MemberList';
 import AdminInformation from './AdminInfoScreen';
+import ApprovedLoans from './ApprovedLoanScreen';
+import LoanRequests from './LoanRequests';
 
 function Dashboard() {
 
@@ -27,6 +29,14 @@ function Dashboard() {
                                         </Nav.Item>
 
                                         <Nav.Item>
+                                            <Nav.Link eventKey="second">Approved Loans</Nav.Link>
+                                        </Nav.Item>
+
+                                        <Nav.Item>
+                                            <Nav.Link eventKey="third">Loan Requests</Nav.Link>
+                                        </Nav.Item>
+
+                                        <Nav.Item>
                                             <Nav.Link eventKey="fourth">Admin Info.</Nav.Link>
                                         </Nav.Item>
                                     </Nav>
@@ -35,6 +45,14 @@ function Dashboard() {
                                     <Tab.Content>
                                         <Tab.Pane eventKey="first">
                                             <MemberList />
+                                        </Tab.Pane>
+
+                                        <Tab.Pane eventKey="second">
+                                            <ApprovedLoans />
+                                        </Tab.Pane>
+
+                                        <Tab.Pane eventKey="third">
+                                            <LoanRequests />
                                         </Tab.Pane>
 
                                         <Tab.Pane eventKey="fourth">

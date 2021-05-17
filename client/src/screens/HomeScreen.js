@@ -34,7 +34,7 @@ const HomeScreen = ({ match }) => {
                 overflowX: "hidden",
                 overflowY: "hidden"
             }}>
-                <img src={Logo} width="50%" height="70%" />
+                <img src={Logo} width="50%" height="67%" />
 
                 <div style={{
                     position: "absolute",

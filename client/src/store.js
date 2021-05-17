@@ -25,7 +25,8 @@ import {
     adminLoginReducer,
     adminRegisterReducer,
     memberDetailsReducer,
-    memberListReducer
+    memberListReducer,
+    memberUpdateFinancialReducer
 } from './reducers/adminReducer';
 
 
@@ -33,9 +34,10 @@ const reducer = combineReducers({
     adminLogin: adminLoginReducer,
     adminRegister: adminRegisterReducer,
 
-    memberDetails: memberDetailsReducer,
+    memberDetail: memberDetailsReducer,
     memberList: memberListReducer,
     memberUpdate: userUpdateAccountReducer,
+    memberFinancialUpdate: memberUpdateFinancialReducer,
 
     loanCreate: loanCreateReducer,
     approveLoan: approveLoanReducer,

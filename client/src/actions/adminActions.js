@@ -24,6 +24,9 @@ import {
     ADMIN_UPDATE_FAIL,
     ADMIN_UPDATE_SUCCESS,
     ADMIN_UPDATE_REQUEST,
+    FINANCIAL_UPDATE_FAIL,
+    FINANCIAL_UPDATE_REQUEST,
+    FINANCIAL_UPDATE_SUCCESS
 } from '../constants/adminContants'
 
 
@@ -111,23 +114,15 @@ export const register = (staffID, name, email, password) => async (dispatch) => 
     }
 }
 
-export const getSingleMember = (id) => async (dispatch, getState) => {
+export const getSingleMember = (memberId) => async (dispatch, getState) => {
     try {
         dispatch({
             type: ADMIN_DETAILS_REQUEST,
         })
 
-        const {
-            userLogin: { adminInfo },
-        } = getState()
 
-        const config = {
-            headers: {
-                Authorization: `Bearer ${adminInfo.token}`,
-            },
-        }
 
-        const { data } = await axios.get(`/accounts/${id}`, config)
+        const { data } = await axios.get(`/admins/member/${memberId}`)
 
         dispatch({
             type: ADMIN_DETAILS_SUCCESS,
@@ -187,3 +182,40 @@ export const getAllMembers = () => async (dispatch, getState) => {
     }
 }
 
+export const updateMemberFinancialStatus = (memberId, asset, loan, debitStatus, creditStatus, remark) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: FINANCIAL_UPDATE_REQUEST,
+        })
+
+        const {
+            adminLogin: { adminInfo },
+        } = getState()
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${adminInfo.token}`,
+            },
+        }
+
+        const { data } = await axios.put(`/admins/f/update/${memberId}`,
+            { asset, loan, creditStatus, debitStatus, remark }, config)
+
+        dispatch({
+            type: FINANCIAL_UPDATE_SUCCESS,
+            payload: data,
+        })
+    } catch (error) {
+        const message =
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message
+        if (message === 'Not authorized, token failed') {
+            dispatch(logout())
+        }
+        dispatch({
+            type: FINANCIAL_UPDATE_FAIL,
+            payload: message,
+        })
+    }
+}

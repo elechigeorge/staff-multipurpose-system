@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Table, Button, ListGroup } from 'react-bootstrap'
+import { Button, ListGroup, Col, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { getAllMembers } from '../actions/adminActions'
+import { getAllMembers } from '../actions/adminActions';
 
 const UserListScreen = ({ history }) => {
     const dispatch = useDispatch()
@@ -24,7 +24,6 @@ const UserListScreen = ({ history }) => {
     }, [dispatch, adminInfo])
 
 
-
     return (
         <>
 
@@ -35,7 +34,7 @@ const UserListScreen = ({ history }) => {
             ) : (
                         <div>
                             {users && users.map(user => (
-                                <ListGroup className="mb-5">
+                                <ListGroup className="mb-5" key={user._id}>
                                     <ListGroup.Item action>First Name: {user.personal_details.first_name}</ListGroup.Item>
                                     <ListGroup.Item action>Last Name: {user.personal_details.last_name}</ListGroup.Item>
                                     <ListGroup.Item action>Email: {user.email}</ListGroup.Item>
@@ -43,7 +42,11 @@ const UserListScreen = ({ history }) => {
                                     <ListGroup.Item action>Gender: {user.personal_details.gender}</ListGroup.Item>
                                     <ListGroup.Item action>Department: {user.personal_details.department}</ListGroup.Item>
 
-                                    <ListGroup.Item action>Phone Number: {user.contact_details.telephone}</ListGroup.Item>
+
+                                    <LinkContainer to={`/user/${user._id}`}>
+                                        <Button className="btn-block btn-success my-3">View Profile</Button>
+                                    </LinkContainer>
+
                                 </ListGroup>
                             ))}
                         </div>

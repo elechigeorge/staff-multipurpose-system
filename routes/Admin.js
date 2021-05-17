@@ -16,7 +16,9 @@ router.route('/').post(registerUser).get(protect, admin, getMembers);
 
 router.route('/members').get(getMembers);
 
-router.route('/f/update/:id').put(updateMemberFinancialStatus, authUser);
+router.route('/member/:id').get(getMemberById);
+
+router.route('/f/update/:memberId').put(updateMemberFinancialStatus);
 
 router.post('/login', authUser);
 

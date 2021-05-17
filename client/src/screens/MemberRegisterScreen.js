@@ -202,6 +202,7 @@ const MemberRegisterScreen = ({ location, history }) => {
                 </Row>
                 <hr />
                 <h3>Next of Kin</h3>
+                <p><i>please note, your next of kin will be used as your loan guarantor</i></p>
                 <Row>
                     <Col xs={12} md={6} lg={6}>
                         <Form.Group controlId='name'>

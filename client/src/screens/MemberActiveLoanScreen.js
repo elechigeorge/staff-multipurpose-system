@@ -32,14 +32,14 @@ const MemberLoanScreen = ({ history }) => {
                 <Message variant='danger'>{error}</Message>
             ) : (
                         <div>
-                            {loans.map(loan => (
+                            {loans.length !== 0 ? loans.map(loan => (
                                 <ListGroup>
 
                                     <ListGroup.Item>Amount: {loan.amount}</ListGroup.Item>
                                     <ListGroup.Item>Purpose: {loan.purpose}</ListGroup.Item>
                                     <ListGroup.Item>Status: {!loan.status ? <Button variant="info">Pending</Button> : <Button variant="success">Success</Button>}</ListGroup.Item>
                                 </ListGroup>
-                            ))}
+                            )) : "No current loan"}
 
                         </div>
                     )}

@@ -21,14 +21,24 @@ import {
 } from '../constants/loanConstants'
 import { logout } from './userActions'
 
-export const getAllLoans = () => async (
-    dispatch
-) => {
+export const getAllLoans = () => async (dispatch, getState) => {
+
     try {
         dispatch({ type: LOAN_GET_REQUEST })
 
+
+        const {
+            adminLogin: { adminInfo },
+        } = getState()
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${adminInfo.token}`,
+            },
+        }
+
         const { data } = await axios.get(
-            `/loans`
+            `/loans`, config
         )
 
         dispatch({
@@ -46,15 +56,23 @@ export const getAllLoans = () => async (
     }
 }
 
+export const getAllApprovedLoan = () => async (dispatch, getState) => {
 
-export const getAllApprovedLoan = () => async (
-    dispatch
-) => {
     try {
         dispatch({ type: LOAN_APPROVED_GET_REQUEST })
 
+        const {
+            adminLogin: { adminInfo },
+        } = getState()
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${adminInfo.token}`,
+            },
+        }
+
         const { data } = await axios.get(
-            `/loans`
+            `/loans/approved`, config
         )
 
         dispatch({
@@ -151,41 +169,41 @@ export const getMemberSpecificLoan = () => async (dispatch, getState) => {
 
 
 
-// export const deleteProduct = (id) => async (dispatch, getState) => {
-//     try {
-//         dispatch({
-//             type: PRODUCT_DELETE_REQUEST,
-//         })
+export const approveLoans = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: LOAN_APPROVE_REQUEST,
+        })
 
-//         const {
-//             userLogin: { userInfo },
-//         } = getState()
+        const {
+            adminLogin: { adminInfo },
+        } = getState()
 
-//         const config = {
-//             headers: {
-//                 Authorization: `Bearer ${userInfo.token}`,
-//             },
-//         }
+        const config = {
+            headers: {
+                Authorization: `Bearer ${adminInfo.token}`,
+            },
+        }
 
-//         await axios.delete(`/api/products/${id}`, config)
+        await axios.put(`/loans/${id}`, config)
 
-//         dispatch({
-//             type: PRODUCT_DELETE_SUCCESS,
-//         })
-//     } catch (error) {
-//         const message =
-//             error.response && error.response.data.message
-//                 ? error.response.data.message
-//                 : error.message
-//         if (message === 'Not authorized, token failed') {
-//             dispatch(logout())
-//         }
-//         dispatch({
-//             type: PRODUCT_DELETE_FAIL,
-//             payload: message,
-//         })
-//     }
-// }
+        dispatch({
+            type: LOAN_APPROVE_SUCCESS,
+        })
+    } catch (error) {
+        const message =
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message
+        if (message === 'Not authorized, token failed') {
+            dispatch(logout())
+        }
+        dispatch({
+            type: LOAN_APPROVE_FAIL,
+            payload: message,
+        })
+    }
+}
 
 
 

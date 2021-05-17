@@ -16,7 +16,8 @@ import AdminScreen from './screens/AdminScreen'
 import MemberScreen from './screens/MemberScreen';
 import MemberDashboard from './screens/MemberDashboard';
 import Dashboard from './screens/Dashboard';
-
+import MemberDetails from './screens/MemberDetailScreen';
+import MemberUpdate from './screens/AdminUpdateMemberFinancialScreen';
 
 const App = () => {
   return (
@@ -37,6 +38,8 @@ const App = () => {
           <Route path='/m/dashboard' component={MemberDashboard} />
           <Route path='/dashboard' component={Dashboard} />
 
+          <Route path='/user/:id' component={MemberDetails} />
+          <Route path='/member/update/:id' component={MemberUpdate} />
 
           {/* <Route path='/admin/userlist' component={UserListScreen} />
           <Route path='/admin/user/:id/edit' component={UserEditScreen} />

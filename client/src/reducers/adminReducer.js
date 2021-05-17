@@ -25,6 +25,9 @@ import {
     ADMIN_UPDATE_SUCCESS,
     ADMIN_UPDATE_FAIL,
     ADMIN_UPDATE_PROFILE_RESET,
+    FINANCIAL_UPDATE_FAIL,
+    FINANCIAL_UPDATE_REQUEST,
+    FINANCIAL_UPDATE_SUCCESS
 } from '../constants/adminContants'
 
 export const adminLoginReducer = (state = {}, action) => {
@@ -84,6 +87,19 @@ export const memberListReducer = (state = { users: [] }, action) => {
             return { loading: false, error: action.payload }
         case ADMIN_LIST_RESET:
             return { users: [] }
+        default:
+            return state
+    }
+}
+
+export const memberUpdateFinancialReducer = (state = { user: {} }, action) => {
+    switch (action.type) {
+        case FINANCIAL_UPDATE_REQUEST:
+            return { ...state, loading: true }
+        case FINANCIAL_UPDATE_SUCCESS:
+            return { loading: false, success: true, user: action.payload }
+        case FINANCIAL_UPDATE_FAIL:
+            return { loading: false, error: action.payload }
         default:
             return state
     }

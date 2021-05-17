@@ -59,10 +59,11 @@ const getSpecificMemberLoanRequest = asyncHandler(async (req, res) => {
 
 
 
-    if (loans.map(loan => loan.user.toString() === req.user._id)) {
+    if (loans) {
 
-
-        res.status(200).json(loans);
+        const specificLoan = loans.filter(loan => loan.user.toString() === req.user._id.toString())
+        console.log(specificLoan)
+        res.status(200).json(specificLoan);
     } else {
         res.status(400)
         throw new Error('Loans not found')

@@ -84,7 +84,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 
 const updateMemberFinancialStatus = asyncHandler(async (req, res) => {
 
-    const id = req.params.id
+    const id = req.params.memberId
     const user = await Members.findById(id)
 
 
